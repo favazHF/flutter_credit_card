@@ -256,6 +256,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
     String number = widget.cardNumber;
     if (widget.obscureCardNumber) {
       final String stripped = number.replaceAll(RegExp(r'[^\d]'), '');
+
       if (stripped.length > 8) {
         final String middle = number
             .substring(4, number.length - 5)
@@ -279,6 +280,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          /*
           if (widget.bankName != null && widget.bankName!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(left: 16, top: 16),
@@ -289,10 +291,11 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                 style: defaultTextStyle,
               ),
             ),
+            */
           Expanded(
             flex: widget.isChipVisible ? 1 : 0,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 if (widget.isChipVisible)
                   Padding(
@@ -304,9 +307,9 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                       scale: 1,
                     ),
                   ),
-                const Spacer(),
+                // const Spacer(),
                 Align(
-                  alignment: Alignment.topRight,
+                  alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
                     child: widget.cardType != null
@@ -318,42 +321,77 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 32,
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 16),
-              child: Text(
-                widget.cardNumber.isEmpty ? 'XXXX XXXX XXXX XXXX' : number,
-                style: widget.textStyle ?? defaultTextStyle,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'VALID\nTHRU',
-                    style: widget.textStyle ??
-                        defaultTextStyle.copyWith(fontSize: 7),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    widget.expiryDate.isEmpty
-                        ? widget.labelExpiredDate
-                        : widget.expiryDate,
-                    style: widget.textStyle ?? defaultTextStyle,
-                  ),
+                  if (widget.cardNumber.isNotEmpty)
+                    const Text(
+                      'CARD NUMBER',
+                      style: TextStyle(
+                        fontFamily: 'gt',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                    ),
+                  if (widget.cardNumber.isNotEmpty)
+                    Text(
+                      number,
+                      style: const TextStyle(
+                        fontFamily: 'gt',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
                 ],
               ),
             ),
           ),
+          const SizedBox(height: 16),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  if (widget.expiryDate.isNotEmpty)
+                    const Text(
+                      'EXP.\nDATE',
+                      style: TextStyle(
+                        fontFamily: 'gt',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                    ),
+                  const SizedBox(width: 8),
+                  if (widget.expiryDate.isNotEmpty)
+                    Text(
+                      widget.expiryDate.isEmpty
+                          ? widget.labelExpiredDate
+                          : widget.expiryDate,
+                      style: const TextStyle(
+                        fontFamily: 'gt',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          /*
           Visibility(
             visible: widget.isHolderNameVisible,
             child: Expanded(
@@ -369,7 +407,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                 ),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );
@@ -406,51 +444,51 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Container(
-              margin: const EdgeInsets.only(top: 16),
-              height: 48,
-              color: Colors.black,
+              margin: const EdgeInsets.only(top: 24),
+              height: 40,
+              color: const Color(0xff242626),
             ),
           ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              margin: const EdgeInsets.only(top: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 9,
-                    child: Container(
-                      height: 48,
-                      color: Colors.white70,
-                    ),
+          Container(
+            margin: const EdgeInsets.only(top: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    height: 40,
+                    color: const Color(0xff046C4C),
                   ),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          widget.cvvCode.isEmpty
-                              ? isAmex
-                                  ? 'XXXX'
-                                  : 'XXX'
-                              : cvv,
-                          maxLines: 1,
-                          style: widget.textStyle ?? defaultTextStyle,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    height: 28,
+                    alignment: Alignment.topCenter,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(
+                        widget.cvvCode.isEmpty ? '' : cvv,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontFamily: 'gt',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: Color(0xff454747),
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Align(
               alignment: Alignment.bottomRight,
               child: Padding(

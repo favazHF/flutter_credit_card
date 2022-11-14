@@ -45,7 +45,7 @@ class CardBackground extends StatelessWidget {
         alignment: Alignment.center,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.all(padding),
+            // margin: EdgeInsets.all(padding),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               gradient: glassmorphismConfig != null
@@ -55,6 +55,7 @@ class CardBackground extends StatelessWidget {
                   ? DecorationImage(
                       image: ExactAssetImage(
                         backgroundImage!,
+                        package: 'mobile_design_system',
                       ),
                       fit: BoxFit.fill,
                     )
