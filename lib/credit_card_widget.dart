@@ -19,35 +19,36 @@ const Map<CardType, String> CardTypeIconAsset = <CardType, String>{
 };
 
 class CreditCardWidget extends StatefulWidget {
-  const CreditCardWidget(
-      {Key? key,
-      required this.cardNumber,
-      required this.expiryDate,
-      required this.cardHolderName,
-      required this.cvvCode,
-      required this.showBackView,
-      this.bankName,
-      this.animationDuration = const Duration(milliseconds: 500),
-      this.height,
-      this.width,
-      this.textStyle,
-      this.cardBgColor = const Color(0xff1b447b),
-      this.obscureCardNumber = true,
-      this.obscureCardCvv = true,
-      this.labelCardHolder = 'CARD HOLDER',
-      this.labelExpiredDate = 'MM/YY',
-      this.cardType,
-      this.isHolderNameVisible = false,
-      this.backgroundImage,
-      this.backgroundNetworkImage,
-      this.glassmorphismConfig,
-      this.isChipVisible = true,
-      this.isSwipeGestureEnabled = true,
-      this.customCardTypeIcons = const <CustomCardTypeIcon>[],
-      required this.onCreditCardWidgetChange,
-      this.padding = AppConstants.creditCardPadding,
-      this.chipColor})
-      : super(key: key);
+  const CreditCardWidget({
+    Key? key,
+    required this.cardNumber,
+    required this.expiryDate,
+    required this.cardHolderName,
+    required this.cvvCode,
+    required this.showBackView,
+    this.bankName,
+    this.animationDuration = const Duration(milliseconds: 500),
+    this.height,
+    this.width,
+    this.textStyle,
+    this.cardBgColor = const Color(0xff1b447b),
+    this.obscureCardNumber = true,
+    this.obscureCardCvv = true,
+    this.labelCardHolder = 'CARD HOLDER',
+    this.labelExpiredDate = 'MM/YY',
+    this.cardType,
+    this.isHolderNameVisible = false,
+    this.backgroundImage,
+    this.backgroundNetworkImage,
+    this.glassmorphismConfig,
+    this.isChipVisible = true,
+    this.isSwipeGestureEnabled = true,
+    this.customCardTypeIcons = const <CustomCardTypeIcon>[],
+    required this.onCreditCardWidgetChange,
+    this.padding = AppConstants.creditCardPadding,
+    this.chipColor,
+    this.wasScanned = false,
+  }) : super(key: key);
 
   final String cardNumber;
   final String expiryDate;
@@ -77,6 +78,7 @@ class CreditCardWidget extends StatefulWidget {
   final CardType? cardType;
   final List<CustomCardTypeIcon> customCardTypeIcons;
   final double padding;
+  final bool wasScanned;
 
   @override
   _CreditCardWidgetState createState() => _CreditCardWidgetState();
@@ -112,6 +114,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
     if (widget.cardBgColor != oldWidget.cardBgColor) {
       _gradientSetup();
     }
+
     super.didUpdateWidget(oldWidget);
   }
 
@@ -243,32 +246,25 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
   /// Card number, Exp. year and Card holder name
   ///
   Widget _buildFrontContainer() {
-    final TextStyle defaultTextStyle =
-        Theme.of(context).textTheme.headline6!.merge(
-              const TextStyle(
-                color: Colors.white,
-                fontFamily: 'halter',
-                fontSize: 16,
-                package: 'flutter_credit_card',
-              ),
-            );
-
     String number = widget.cardNumber;
-    if (widget.obscureCardNumber) {
-      final String stripped = number.replaceAll(RegExp(r'[^\d]'), '');
 
-      if (stripped.length > 8) {
-        final String middle = number
-            .substring(4, number.length - 5)
-            .trim()
-            .replaceAll(RegExp(r'\d'), '*');
-        number = stripped.substring(0, 4) +
-            ' ' +
-            middle +
-            ' ' +
-            stripped.substring(stripped.length - 4);
+    if (widget.obscureCardNumber) {
+      if (number.length >= 16) {
+        number = number.replaceAll(RegExp(r'[0-9]'), '*');
+        final List<String> numberSplitted = number.split(' ');
+        final List<String> splitted = widget.cardNumber.split(' ');
+        numberSplitted.last = splitted.last;
+        number = numberSplitted.join(' ');
+      } else if (number.length == 5 ||
+          number.length == 10 ||
+          number.length == 15) {
+        number = number + ' ';
+        number = number.replaceAll(RegExp(r'[0-9]'), '*');
+      } else {
+        number = number.replaceAll(RegExp(r'[0-9]'), '*');
       }
     }
+
     return CardBackground(
       backgroundImage: widget.backgroundImage,
       backgroundNetworkImage: widget.backgroundNetworkImage,
@@ -280,18 +276,6 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          /*
-          if (widget.bankName != null && widget.bankName!.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(left: 16, top: 16),
-              child: Text(
-                widget.bankName!,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: defaultTextStyle,
-              ),
-            ),
-            */
           Expanded(
             flex: widget.isChipVisible ? 1 : 0,
             child: Row(
@@ -307,7 +291,6 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                       scale: 1,
                     ),
                   ),
-                // const Spacer(),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
@@ -391,23 +374,6 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
               ),
             ),
           ),
-          /*
-          Visibility(
-            visible: widget.isHolderNameVisible,
-            child: Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                child: Text(
-                  widget.cardHolderName.isEmpty
-                      ? widget.labelCardHolder
-                      : widget.cardHolderName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: widget.textStyle ?? defaultTextStyle,
-                ),
-              ),
-            ),
-          ),*/
         ],
       ),
     );
