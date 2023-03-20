@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/constants.dart';
+import 'package:mobile_l10n/mobile_l10n.dart';
 
 import 'credit_card_animation.dart';
 import 'credit_card_background.dart';
@@ -313,9 +314,9 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   if (widget.cardNumber.isNotEmpty)
-                    const Text(
-                      'CARD NUMBER',
-                      style: TextStyle(
+                    Text(
+                      Lt.of(context).CardNumber__Text,
+                      style: const TextStyle(
                         fontFamily: 'gt',
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
@@ -348,9 +349,9 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   if (widget.expiryDate.isNotEmpty)
-                    const Text(
-                      'EXP.\nDATE',
-                      style: TextStyle(
+                    Text(
+                      Lt.of(context).ExpiryDate__Text,
+                      style: const TextStyle(
                         fontFamily: 'gt',
                         fontWeight: FontWeight.w400,
                         fontSize: 12,

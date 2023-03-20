@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mobile_l10n/mobile_l10n.dart';
 
 class CreditCardForm extends StatefulWidget {
   const CreditCardForm({
@@ -303,9 +304,9 @@ class _CreditCardFormState extends State<CreditCardForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Text(
-                      'Card number',
-                      style: TextStyle(
+                    Text(
+                      Lt.of(context).CardNumber__Label,
+                      style: const TextStyle(
                           fontFamily: 'gt',
                           fontWeight: FontWeight.w400,
                           color: Color(0xff242626)),
@@ -402,16 +403,16 @@ class _CreditCardFormState extends State<CreditCardForm> {
                       const SizedBox(height: 8),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const <Widget>[
-                          FaIcon(
+                        children: <Widget>[
+                          const FaIcon(
                             FontAwesomeIcons.xmark,
                             color: Color(0xffDF514B),
                             size: 7.5,
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(
-                            'Please enter a valid credit card',
-                            style: TextStyle(
+                            Lt.of(context).Error_CardNumber__InputValidation,
+                            style: const TextStyle(
                                 fontFamily: 'GT',
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -435,9 +436,9 @@ class _CreditCardFormState extends State<CreditCardForm> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const Text(
-                            'Expired date',
-                            style: TextStyle(
+                          Text(
+                            Lt.of(context).ExpiryDate__Label,
+                            style: const TextStyle(
                                 fontFamily: 'gt',
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xff242626)),
@@ -503,7 +504,8 @@ class _CreditCardFormState extends State<CreditCardForm> {
                               decoration: InputDecoration(
                                 fillColor: const Color(0xffFFFFFF),
                                 filled: true,
-                                hintText: '12/22',
+                                hintText:
+                                    Lt.of(context).ExpiryDate__Placeholder,
                                 contentPadding: statusExpiryDate == 'focus'
                                     ? const EdgeInsets.fromLTRB(12, 20, 12, 14)
                                     : const EdgeInsets.fromLTRB(12, 24, 12, 16),
@@ -554,20 +556,22 @@ class _CreditCardFormState extends State<CreditCardForm> {
                             const SizedBox(height: 8),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const <Widget>[
-                                FaIcon(
+                              children: <Widget>[
+                                const FaIcon(
                                   FontAwesomeIcons.xmark,
                                   color: Color(0xffDF514B),
                                   size: 7.5,
                                 ),
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 Text(
-                                  'Invalid expiration date',
-                                  style: TextStyle(
-                                      fontFamily: 'GT',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffDF514B)),
+                                  Lt.of(context)
+                                      .Error_ExpiryDate__InputValidation,
+                                  style: const TextStyle(
+                                    fontFamily: 'GT',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xffDF514B),
+                                  ),
                                 )
                               ],
                             )
@@ -583,12 +587,13 @@ class _CreditCardFormState extends State<CreditCardForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Text(
-                          'CVV',
-                          style: TextStyle(
-                              fontFamily: 'gt',
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xff242626)),
+                        Text(
+                          Lt.of(context).CVV__Label,
+                          style: const TextStyle(
+                            fontFamily: 'gt',
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff242626),
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Neumorphic(
@@ -648,7 +653,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
                             decoration: InputDecoration(
                               fillColor: const Color(0xffFFFFFF),
                               filled: true,
-                              hintText: '123',
+                              hintText: Lt.of(context).CVV__Placeholder,
                               contentPadding: statusCvv == 'focus'
                                   ? const EdgeInsets.fromLTRB(12, 20, 12, 14)
                                   : const EdgeInsets.fromLTRB(12, 24, 12, 16),

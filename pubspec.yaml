@@ -1,8 +1,7 @@
 name: flutter_credit_card
 description: A Credit Card widget package, support entering card details, card flip animation.
 version: 3.0.4
-homepage: https://github.com/simformsolutions/flutter_credit_card
-issue_tracker: https://github.com/simformsolutions/flutter_credit_card/issues
+publish_to: none
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -12,6 +11,10 @@ dependencies:
     sdk: flutter
   flutter_neumorphic: ^3.2.0
   font_awesome_flutter: ^10.2.1
+  mobile_l10n:
+    git:
+      url: https://human-forest:Nytt1ycZ7CppE1jX_eUB@gitlab.com/human-forest/human-forest-mobile-app/mobile_l10n.git
+      ref: main
 
 dev_dependencies:
   flutter_test:
